@@ -1,0 +1,35 @@
+#Ocultar Teclado en Fragment
+
+Cuando iniciamos un Fragment en Android que contiene un objeto EditText al hacer click en el se muestra el teclado virtual del sistema, pero luego al hacer click en alguna otra parte de la pantalla el teclado no se oculta. Si no queremos que esto pase podemos hacer lo siguiente:
+
+- En el archivo ***xml*** de ***Layout*** Colocar nuestro EditText dentro de otor elemento que lo contenga.
+```
+    <LinearLayout
+        android:id="@+id/contenedor"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText 
+        ...
+        \>
+    <\LinearLayout>
+```
+
+- En la clase del ***Fragment*** agregar al objeto que contiene al EditText un onClickListener y llamar al metodo ***esconderTeclado()***.
+```
+    LinearLayout contenedor = view.findViewById(R.id.contenedor);
+    contenedor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                esconderTeclado();
+            }
+        });
+```
+- Por ultimo definir el metodo ***esconderTeclado()***
+```
+    void esconderTeclado()
+    {
+        InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(email.getWindowToken(), 0);
+    }
+```
